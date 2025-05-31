@@ -22,3 +22,7 @@ jobs:
       - name: build test
         working-directory: tally-light-client
         run: npm run build
+
+      - name: run server
+        working-directory: tally-light-server
+        run: npm install && npm run build && npm run start &
