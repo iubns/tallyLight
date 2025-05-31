@@ -33,5 +33,5 @@ jobs:
           remote-password: ${{ secrets.CLIENT_SERVER_PASSWORD }}
           remote-path: /var/www/html
           remote-port: 22
-          local-path: ./tally-light-client/out
+          local-path: /tally-light-client/out
           sync: full
