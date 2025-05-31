@@ -57,6 +57,7 @@ jobs:
           password: ${{ secrets.BACKEND_SERVER_PASSWORD }}
           port: 2022
           script: |
+            source ~/.bashrc
             cd /home/pi/api
             npm install
             pm2 reload all
