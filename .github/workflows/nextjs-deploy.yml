@@ -27,6 +27,9 @@ jobs:
           npm run build
           local_path_slash="/tally-light-client/out"
 
+      - name: check build output ./
+        run: ls -al ./
+
       - name: check build output
         run: ls -al tally-light-client
 
@@ -42,5 +45,5 @@ jobs:
           remote-password: ${{ secrets.CLIENT_SERVER_PASSWORD }}
           remote-path: /var/www/html
           remote-port: 22
-          local-path: /tally-light-client/out
+          local-path: tally-light-client/out
           sync: full
