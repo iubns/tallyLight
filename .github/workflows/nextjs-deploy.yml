@@ -23,7 +23,9 @@ jobs:
         run: npm install
       - name: client build
         working-directory: tally-light-client
-        run: npm run build
+        run: |
+          npm run build
+          local_path_slash="/tally-light-client/out"
 
       - name: check build output
         run: ls -al tally-light-client
