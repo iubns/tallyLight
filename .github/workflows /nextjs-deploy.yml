@@ -19,10 +19,13 @@ jobs:
         with:
           node-version: 20
       - name: npm install
+        working-directory: tally-light-client
         run: npm install
       - name: client build
+        working-directory: tally-light-client
         run: npm run build
       - name: deploy
+        working-directory: tally-light-client
         uses: milanmk/actions-file-deployer@master
         with:
           remote-protocol: sftp

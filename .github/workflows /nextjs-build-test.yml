@@ -17,6 +17,8 @@ jobs:
         with:
           node-version: 20
       - name: npm install
+        working-directory: tally-light-client
         run: npm install
       - name: build test
+        working-directory: tally-light-client
         run: npm run build
