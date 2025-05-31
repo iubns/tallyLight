@@ -24,6 +24,13 @@ jobs:
       - name: client build
         working-directory: tally-light-client
         run: npm run build
+
+      - name: check build output
+        run: ls -al tally-light-client
+
+      - name: check build output/out
+        run: ls -al tally-light-client/out
+
       - name: deploy
         uses: milanmk/actions-file-deployer@master
         with:
