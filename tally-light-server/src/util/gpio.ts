@@ -1,11 +1,4 @@
-import {
-  init_gpio,
-  GPIO_MODE_OUTPUT,
-  GPIO_MODE_INPUT_PULLDOWN,
-  blink_gpio,
-  toggle_gpio,
-  get_gpio,
-} from "@iiot2k/gpiox"
+import { init_gpio, GPIO_MODE_INPUT_PULLDOWN, get_gpio } from "@iiot2k/gpiox"
 
 init_gpio(2, GPIO_MODE_INPUT_PULLDOWN, true)
 init_gpio(3, GPIO_MODE_INPUT_PULLDOWN, true)

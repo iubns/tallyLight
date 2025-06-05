@@ -13,13 +13,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@iiot2k/gpiox": "^3.0.5",
+    "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
     "@types/node": "^22.15.29",
     "nodemon": "^3.1.10",
-    "typescript": "^5.8.3",
-    "@iiot2k/gpiox": "^3.0.5"
+    "typescript": "^5.8.3"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "pigpio": "^3.3.1"
   }
