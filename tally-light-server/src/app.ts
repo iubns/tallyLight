@@ -1,9 +1,11 @@
 // app.ts
 
+import cors from "cors"
 import express from "express"
 import { screenState, setRVM, toggleScreen } from "./util/gpio"
 
 const app = express()
+app.use(cors()) // CORS 허용
 
 app.set("port", process.env.PORT || 3000)
 
