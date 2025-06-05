@@ -1,7 +1,7 @@
 // app.ts
 
 import express from "express"
-import { onLed, offLed, readButton } from "./util/gpio"
+import { screenState, setRVM, toggleScreen } from "./util/gpio"
 
 const app = express()
 
@@ -11,27 +11,19 @@ app.get("/", (req, res) => {
   res.send("Hello World!")
 })
 
-app.post("/on-light", (req, res) => {
-  onLed()
-  console.log("Light ON")
-  res.send("Light ON")
+app.get("/screen-state", (req, res) => {
+  const state = screenState()
+  res.json(state)
 })
 
-app.post("/off-light", (req, res) => {
-  offLed()
-  console.log("Light OFF")
-  res.send("Light OFF")
+app.post("/switch-screen", (req, res) => {
+  toggleScreen()
+  res.send("Screen switched")
 })
 
-app.get("/read-button", async (req, res) => {
-  try {
-    const buttonState = await readButton()
-    console.log("Button state:", buttonState)
-    res.send(`Button is ${buttonState}`)
-  } catch (error) {
-    console.error("Error reading button:", error)
-    res.status(500).send("Error reading button")
-  }
+app.post("/push-button", async (req, res) => {
+  setRVM(req.body.screenId as string)
+  res.send(`Button for screen ${req.query.screenId} pushed`)
 })
 
 app.listen(app.get("port"), () => {
