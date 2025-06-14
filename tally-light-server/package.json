@@ -21,6 +21,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "atem-connection": "^3.6.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "pigpio": "^3.3.1"

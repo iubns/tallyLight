@@ -6,6 +6,7 @@ import { screenState, setRVM, toggleScreen } from "./util/gpio"
 
 const app = express()
 app.use(cors()) // CORS 허용
+app.use(express.json()) // JSON 요청 본문 파싱
 
 app.set("port", process.env.PORT || 3000)
 
@@ -24,7 +25,7 @@ app.post("/switch-screen", (req, res) => {
 })
 
 app.post("/push-button", async (req, res) => {
-  setRVM(req.body.screenId as string)
+  setRVM(req.body.screenId as number)
   res.send(`Button for screen ${req.query.screenId} pushed`)
 })
 
