@@ -6,16 +6,13 @@ import api from "@/config/axios"
 
 type Screen = {
   id: string
-  PGM: boolean   // 송출(Program)
-  RVW: boolean   // 대기(Preview)
+  name: string
+  PGM: boolean // 송출(Program)
+  RVW: boolean // 대기(Preview)
 }
 
 // 기본 6개: 모두 비활성(회색)
-const defaultScreens: Screen[] = Array.from({ length: 6 }, (_, i) => ({
-  id: `${i + 1}`,
-  PGM: false,
-  RVW: false,
-}))
+const defaultScreens: Screen[] = []
 
 export default function Home() {
   const [screens, setScreens] = useState<Screen[]>(defaultScreens)
@@ -31,33 +28,15 @@ export default function Home() {
   async function fetchData() {
     try {
       const { data } = await api.get<Screen[]>("/screen-state")
-      // 최소 6개 이상 넘어오면 앞 6개만 사용
-      if (Array.isArray(data) && data.length >= 6) {
-        setScreens(data.slice(0, 6))
-      }
+      setScreens(data)
     } catch {
       console.warn("서버 연결 실패 — 기본 레이아웃 유지")
     }
   }
 
-  // 송출 버튼 클릭 핸들러
-  async function handleProgram(screenId: string) {
-    // 로컬 즉시 반영: 클릭한 id만 PGM=true
-    setScreens((prev) =>
-      prev.map((s) => ({ ...s, PGM: s.id === screenId }))
-    )
-    try {
-      await api.post("/program-button", { screenId })
-    } catch {
-      console.warn("송출 버튼 전송 실패")
-    }
-  }
-
   // 대기 버튼 클릭 핸들러
   async function handlePreview(screenId: string) {
-    setScreens((prev) =>
-      prev.map((s) => ({ ...s, RVW: s.id === screenId }))
-    )
+    setScreens((prev) => prev.map((s) => ({ ...s, RVW: s.id === screenId })))
     try {
       await api.post("/push-button", { screenId })
     } catch {
@@ -67,9 +46,7 @@ export default function Home() {
 
   // 전환 버튼 클릭 핸들러
   async function handleSwitch() {
-    setScreens((prev) =>
-      prev.map((s) => ({ ...s, PGM: s.RVW, RVW: s.PGM }))
-    )
+    setScreens((prev) => prev.map((s) => ({ ...s, PGM: s.RVW, RVW: s.PGM })))
     try {
       await api.post("/switch-screen")
     } catch {
@@ -78,8 +55,6 @@ export default function Home() {
   }
 
   // 0~2: Program, 3~5: Preview
-  const programRow = screens.slice(0, 3)
-  const previewRow = screens.slice(3, 6)
 
   return (
     <div className="container">
@@ -91,11 +66,10 @@ export default function Home() {
 
       <div className="row-label">송출 (Program)</div>
       <div className="grid-row">
-        {programRow.map((s, i) => (
+        {screens.map((screen, i) => (
           <button
-            key={s.id}
-            onClick={() => handleProgram(s.id)}
-            className={`grid-btn ${s.PGM ? "active-program" : ""}`}
+            key={screen.id}
+            className={`grid-btn ${screen.PGM ? "active-program" : ""}`}
           >
             {i + 1}
           </button>
@@ -104,11 +78,11 @@ export default function Home() {
 
       <div className="row-label">대기 (Preview)</div>
       <div className="grid-row">
-        {previewRow.map((s, i) => (
+        {screens.map((screen, i) => (
           <button
-            key={s.id}
-            onClick={() => handlePreview(s.id)}
-            className={`grid-btn ${s.RVW ? "active-preview" : ""}`}
+            key={screen.id}
+            onClick={() => handlePreview(screen.id)}
+            className={`grid-btn ${screen.RVW ? "active-preview" : ""}`}
           >
             {i + 1}
           </button>
@@ -169,12 +143,12 @@ export default function Home() {
           transform: translate(-50%, -50%);
         }
         .active-program {
-          background: green;
+          background: red;
           color: #fff;
           border-color: darkgreen;
         }
         .active-preview {
-          background: red;
+          background: green;
           color: #fff;
           border-color: darkred;
         }
