@@ -24,7 +24,7 @@ app.post("/switch-screen", (req, res) => {
 })
 
 app.post("/push-button", async (req, res) => {
-  setRVM(req.body.screenId as string)
+  setRVM(req.body.screenId as number)
   res.send(`Button for screen ${req.query.screenId} pushed`)
 })
 
